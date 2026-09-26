@@ -9,6 +9,18 @@ function App() {
   const [resultado, setResultado] = useState(null)
   const [mensagem, setMensagem] = useState('Carregando base de dados...')
   const [atualizando, setAtualizando] = useState(false)
+  const [adminLiberado, setAdminLiberado] = useState(false)
+
+function liberarAdmin() {
+  const senha = prompt('Digite a senha de administrador:')
+
+  if (senha === import.meta.env.VITE_ADMIN_PASSWORD) {
+    setAdminLiberado(true)
+    alert('Modo administrador liberado!')
+  } else if (senha !== null) {
+    alert('Senha incorreta.')
+  }
+}
 
 
 
@@ -257,17 +269,29 @@ async function consultarNF(e) {
         </div>
 
         <div className="area-atualizar">
-  <label className="botao-atualizar">
-    {atualizando ? 'Atualizando...' : 'Atualizar Base'}
 
-    <input
-      type="file"
-      accept=".xls,.xlsx,.xlsm"
-      onChange={atualizarBase}
-      disabled={atualizando}
-      hidden
-    />
-  </label>
+  {!adminLiberado ? (
+    <button
+      type="button"
+      className="botao-atualizar"
+      onClick={liberarAdmin}
+    >
+      🔒 Administrador
+    </button>
+  ) : (
+    <label className="botao-atualizar">
+      {atualizando ? 'Atualizando...' : 'Atualizar Base'}
+
+      <input
+        type="file"
+        accept=".xls,.xlsx,.xlsm"
+        onChange={atualizarBase}
+        disabled={atualizando}
+        hidden
+      />
+    </label>
+  )}
+
 </div>
 
 
