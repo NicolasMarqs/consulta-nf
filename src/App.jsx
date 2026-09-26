@@ -29,35 +29,23 @@ async function testarSupabase() {
 
 testarSupabase()
 
-    async function carregarPlanilha() {
-      try {
-        const resposta = await fetch(
-          '/Expedição VILA GUILHERME.xlsm'
-        )
+async function carregarBase() {
+  try {
+    const { count, error } = await supabase
+      .from('consulta_nf')
+      .select('*', { count: 'exact', head: true })
 
-        const arquivo = await resposta.arrayBuffer()
-        const workbook = XLSX.read(arquivo, { type: 'array' })
-
-        const planilha = workbook.Sheets['Planilha3']
-
-        if (!planilha) {
-          throw new Error('A aba Planilha3 não foi encontrada.')
-        }
-
-        const linhas = XLSX.utils.sheet_to_json(planilha, {
-          defval: '',
-          raw: false,
-        })
-
-        setDados(linhas)
-        setMensagem(`${linhas.length} registros carregados`)
-      } catch (erro) {
-        console.error(erro)
-        setMensagem('Erro ao carregar a base de dados')
-      }
+    if (error) {
+      throw error
     }
 
-    carregarPlanilha()
+    setMensagem(`${count ?? 0} registros no banco`)
+  } catch (erro) {
+    console.error('Erro ao carregar quantidade:', erro)
+    setMensagem('Erro ao consultar a base de dados')
+  }
+}
+    carregarBase()
   }, [])
 
 async function atualizarBase(event) {
@@ -228,7 +216,7 @@ async function consultarNF(e) {
               <h3>Nota Fiscal {resultado['NOTA FISCAL']}</h3>
 
               <p><strong>Data:</strong> {resultado['DATA CARREGAMENTO'] || '-'}</p>
-              
+
               <p>
                 <strong>Transporte:</strong>{' '}
                 {resultado['TRANSPORTE'] || '-'}
