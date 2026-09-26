@@ -148,7 +148,7 @@ async function consultarNF(e) {
     .from('consulta_nf')
     .select('*')
     .eq('nota_fiscal', nfDigitada)
-    .maybeSingle()
+    .order('id', { ascending: true })
 
   if (error) {
     console.error('Erro ao consultar nota:', error)
@@ -156,20 +156,14 @@ async function consultarNF(e) {
     return
   }
 
-  if (!data) {
+  if (!data || data.length === 0) {
     setResultado('nao-encontrada')
     return
   }
 
-  setResultado({
-    'NOTA FISCAL': data.nota_fiscal,
-    'DATA CARREGAMENTO': data.data_carregamento,
-    'TRANSPORTE': data.transporte,
-    'MOTORISTA': data.motorista,
-    'CHAVE DE ACESSO': data.chave_acesso,
-    'OBSERVAÇÃO': data.observacao
-  })
+  setResultado(data)
 }
+
 
   return (
     <main className="pagina">
@@ -211,33 +205,44 @@ async function consultarNF(e) {
             </div>
           </form>
 
-          {resultado && resultado !== 'nao-encontrado' && (
-            <div className="resultado">
-              <h3>Nota Fiscal {resultado['NOTA FISCAL']}</h3>
+{Array.isArray(resultado) && resultado.length > 0 && (
+  <div className="resultado">
+    {resultado.map((item, index) => (
+      <div key={item.id || index} className="resultado-item">
+        <h3>
+          Nota Fiscal {item.nota_fiscal}
+          {resultado.length > 1 && ` - Ocorrência ${index + 1}`}
+        </h3>
 
-              <p><strong>Data:</strong> {resultado['DATA CARREGAMENTO'] || '-'}</p>
+        <p>
+          <strong>Data:</strong> {item.data_carregamento || '-'}
+        </p>
 
-              <p>
-                <strong>Transporte:</strong>{' '}
-                {resultado['TRANSPORTE'] || '-'}
-              </p>
+        <p>
+          <strong>Transporte:</strong>{' '}
+          {item.transporte || '-'}
+        </p>
 
-              <p>
-                <strong>Motorista:</strong>{' '}
-                {resultado['MOTORISTA'] || '-'}
-              </p>
+        <p>
+          <strong>Motorista:</strong>{' '}
+          {item.motorista || '-'}
+        </p>
 
-              <p>
-                <strong>Chave de acesso:</strong>{' '}
-                {resultado['CHAVE DE ACESSO'] || '-'}
-              </p>
+        <p>
+          <strong>Chave de acesso:</strong>{' '}
+          {item.chave_acesso || '-'}
+        </p>
 
-              <p>
-                <strong>Observação:</strong>{' '}
-                {resultado['OBSERVAÇÃO'] || '-'}
-              </p>
-            </div>
-          )}
+        <p>
+          <strong>Observação:</strong>{' '}
+          {item.observacao || '-'}
+        </p>
+
+        {index < resultado.length - 1 && <hr />}
+      </div>
+    ))}
+  </div>
+)}
 
           {resultado === 'nao-encontrado' && (
             <div className="nao-encontrada">
