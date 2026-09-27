@@ -310,3 +310,111 @@
     margin-left: 0;
   }
 }
+
+/* =========================
+   RESPONSIVO - CELULAR
+   ========================= */
+
+@media (max-width: 600px) {
+
+  .pagina {
+    min-height: 100vh;
+    padding: 20px 12px;
+  }
+
+  .container {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Cabeçalho */
+  .cabecalho {
+    flex-direction: column;
+    text-align: center;
+    gap: 8px;
+    margin-bottom: 20px;
+  }
+
+  .logo-marcas img {
+    max-width: 220px;
+    width: 80%;
+    height: auto;
+  }
+
+  .cabecalho h1 {
+    font-size: 22px;
+    margin: 4px 0;
+  }
+
+  .cabecalho p {
+    font-size: 14px;
+  }
+
+  /* Card principal */
+  .card {
+    width: 100%;
+    padding: 24px 16px;
+    border-radius: 16px;
+    box-sizing: border-box;
+  }
+
+  .card h2 {
+    font-size: 21px;
+    text-align: center;
+  }
+
+  .descricao {
+    font-size: 14px;
+    line-height: 1.5;
+    text-align: center;
+  }
+
+  /* Campo e botão */
+  .consulta {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .consulta input {
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  .consulta button {
+    width: 100%;
+  }
+
+  /* Resultado */
+  .resultado {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .resultado-item {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  /* Evita a chave de acesso estourar a tela */
+  .resultado-item p {
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  /* Informações inferiores */
+  .atualizacao {
+    font-size: 13px;
+    text-align: center;
+    margin-top: 20px;
+  }
+
+  .area-atualizar {
+    text-align: center;
+  }
+
+  .botao-atualizar {
+    max-width: 100%;
+  }
+}
