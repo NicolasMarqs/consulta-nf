@@ -9,6 +9,7 @@ function App() {
   const [resultado, setResultado] = useState(null)
   const [mensagem, setMensagem] = useState('Carregando base de dados...')
   const [atualizando, setAtualizando] = useState(false)
+  const [ultimaAtualizacao, setUltimaAtualizacao] = useState(null)
   const [adminLiberado, setAdminLiberado] = useState(false)
 
 function liberarAdmin() {
@@ -51,6 +52,18 @@ async function carregarBase() {
       throw error
     }
 
+const { data: ultima } = await supabase
+  .from('consulta_nf')
+  .select('atualizado_em')
+  .not('atualizado_em', 'is', null)
+  .order('atualizado_em', { ascending: false })
+  .limit(1)
+  .maybeSingle()
+
+if (ultima?.atualizado_em) {
+  setUltimaAtualizacao(ultima.atualizado_em)
+}
+
     setMensagem(`${count ?? 0} registros no banco`)
   } catch (erro) {
     console.error('Erro ao carregar quantidade:', erro)
@@ -88,6 +101,8 @@ async function atualizarBase(event) {
     console.log('PRIMEIRA LINHA:', linhas[0])
 console.log('COLUNAS:', Object.keys(linhas[0] || {}))
 
+const agora = new Date().toISOString()
+
 const registros = linhas
   .filter((linha) => linha['NOTA FISCAL'])
   .map((linha) => ({
@@ -96,7 +111,8 @@ const registros = linhas
     transporte: String(linha['TRANSPORTE'] ?? '').trim(),
     motorista: String(linha['MOTORISTA'] ?? '').trim(),
     chave_acesso: String(linha['CHAVE DE ACESSO'] ?? '').trim(),
-    observacao: String(linha['OBSERVAÇÃO'] ?? '').trim()
+    observacao: String(linha['OBSERVAÇÃO'] ?? '').trim(),
+    atualizado_em: agora
   }))
 
 setMensagem(`Enviando ${registros.length} registros para o banco...`)
@@ -263,10 +279,20 @@ async function consultarNF(e) {
           )}
         </section>
 
-        <div className="atualizacao">
-          <span className="status"></span>
-          {mensagem}
-        </div>
+<div className="atualizacao">
+  <span className="status"></span>
+
+  <div>
+    <div>{mensagem}</div>
+
+    {ultimaAtualizacao && (
+      <div>
+        Última atualização:{' '}
+        {new Date(ultimaAtualizacao).toLocaleString('pt-BR')}
+      </div>
+    )}
+  </div>
+</div>
 
         <div className="area-atualizar">
 
