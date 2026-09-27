@@ -418,3 +418,63 @@
     max-width: 100%;
   }
 }
+
+/* CORREÇÃO DO CABEÇALHO NO CELULAR */
+@media (max-width: 600px) {
+
+  .cabecalho {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    gap: 8px;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+
+  .logo-marcas {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .logo-marcas img {
+    width: auto;
+    max-width: 280px;
+    height: auto;
+    display: block;
+  }
+
+  .cabecalho > div:last-child {
+    width: 100%;
+    text-align: center;
+  }
+
+  .cabecalho h1 {
+    width: 100%;
+    margin: 0;
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .cabecalho p {
+    width: 100%;
+    margin: 4px 0 0;
+    font-size: 14px;
+    text-align: center;
+  }
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}
