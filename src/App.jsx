@@ -1,3 +1,4 @@
+import logos from './assets/LOGOS.png'
 import { useEffect, useState } from 'react'
 import * as XLSX from 'xlsx'
 import './App.css'
@@ -197,7 +198,9 @@ async function consultarNF(e) {
     <main className="pagina">
       <div className="container">
         <header className="cabecalho">
-          <div className="logo">R</div>
+         <div className="logo-marcas">
+          <img src={logos} alt="RPoint e Sonnervig Ford" />
+        </div>
 
           <div>
             <h1>Consulta de Carregamento</h1>
@@ -206,7 +209,6 @@ async function consultarNF(e) {
         </header>
 
         <section className="card">
-          <div className="icone">📦</div>
 
           <h2>Consultar Nota Fiscal</h2>
 
@@ -235,48 +237,64 @@ async function consultarNF(e) {
 
 {Array.isArray(resultado) && resultado.length > 0 && (
   <div className="resultado">
+
+    <div className="resultado-sucesso">
+      ✓ Nota fiscal encontrada
+    </div>
+
     {resultado.map((item, index) => (
       <div key={item.id || index} className="resultado-item">
-        <h3>
-          Nota Fiscal {item.nota_fiscal}
-          {resultado.length > 1 && ` - Ocorrência ${index + 1}`}
-        </h3>
 
-        <p>
-          <strong>Data:</strong> {item.data_carregamento || '-'}
-        </p>
+        <div className="resultado-titulo">
+          <span>Nota Fiscal</span>
+          <strong>{item.nota_fiscal}</strong>
 
-        <p>
-          <strong>Transporte:</strong>{' '}
-          {item.transporte || '-'}
-        </p>
+          {resultado.length > 1 && (
+            <small>Ocorrência {index + 1}</small>
+          )}
+        </div>
 
-        <p>
-          <strong>Motorista:</strong>{' '}
-          {item.motorista || '-'}
-        </p>
+        <div className="resultado-dados">
 
-        <p>
-          <strong>Chave de acesso:</strong>{' '}
-          {item.chave_acesso || '-'}
-        </p>
+          <div>
+            <span>Data</span>
+            <strong>{item.data_carregamento || '-'}</strong>
+          </div>
 
-        <p>
-          <strong>Observação:</strong>{' '}
-          {item.observacao || '-'}
-        </p>
+          <div>
+            <span>Transporte</span>
+            <strong>{item.transporte || '-'}</strong>
+          </div>
+
+          <div>
+            <span>Motorista</span>
+            <strong>{item.motorista || '-'}</strong>
+          </div>
+
+          <div>
+            <span>Chave de acesso</span>
+            <strong>{item.chave_acesso || '-'}</strong>
+          </div>
+
+          <div className="resultado-observacao">
+            <span>Observação</span>
+            <strong>{item.observacao || '-'}</strong>
+          </div>
+
+        </div>
 
         {index < resultado.length - 1 && <hr />}
+
       </div>
     ))}
   </div>
 )}
 
-          {resultado === 'nao-encontrado' && (
-            <div className="nao-encontrada">
-              Nota fiscal não encontrada na base de dados.
-            </div>
-          )}
+{resultado === 'nao-encontrada' && (
+  <div className="nao-encontrada">
+    ⚠️ Nota fiscal não encontrada na base de dados.
+  </div>
+)}
         </section>
 
 <div className="atualizacao">

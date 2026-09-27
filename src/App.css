@@ -183,3 +183,130 @@
   border-color: #94a3b8;
   color: #1e293b;
 }   
+
+.logo-marcas {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.logo-marcas img {
+  width: 320px;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+.nao-encontrada {
+  margin-top: 18px;
+  padding: 14px 18px;
+
+  background: #fff3f3;
+  border: 1px solid #f1b5b5;
+  border-radius: 10px;
+
+  color: #b42318;
+  font-size: 15px;
+  font-weight: 600;
+
+  text-align: center;
+}
+
+/* ===== RESULTADO DA CONSULTA ===== */
+
+.resultado {
+  margin-top: 18px;
+  text-align: left;
+}
+
+.resultado-sucesso {
+  background: #ecfdf3;
+  border: 1px solid #86efac;
+  color: #15803d;
+  padding: 12px 16px;
+  border-radius: 10px;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+
+.resultado-item {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 18px;
+}
+
+.resultado-titulo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-bottom: 12px;
+  margin-bottom: 14px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.resultado-titulo span {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.resultado-titulo strong {
+  color: #0f172a;
+  font-size: 18px;
+}
+
+.resultado-titulo small {
+  margin-left: auto;
+  color: #64748b;
+}
+
+.resultado-dados {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.resultado-dados > div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.resultado-dados span {
+  color: #64748b;
+  font-size: 13px;
+}
+
+.resultado-dados strong {
+  color: #1e293b;
+  font-size: 15px;
+  font-weight: 600;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.resultado-observacao {
+  grid-column: 1 / -1;
+  background: #ffffff;
+  border-radius: 8px;
+  padding: 10px;
+}
+
+/* CELULAR */
+
+@media (max-width: 600px) {
+  .resultado-dados {
+    grid-template-columns: 1fr;
+  }
+
+  .resultado-titulo {
+    flex-wrap: wrap;
+  }
+
+  .resultado-titulo small {
+    width: 100%;
+    margin-left: 0;
+  }
+}
